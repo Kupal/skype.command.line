@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+<project name="skype-command" basedir="." default="product-build">
+
+
+    <!-- Main properties of the build file -->
+    <property file="build.properties" />
+    <property name="app.name" value="skype-command" />
+
+    <!-- Properties define names of the directories for build script -->
+    <property name="src.dir" value="src" />
+    <property name="integration.src.dir" value="integration"/>
+    <!--<property name="test.dir" value="test" />-->
+    <property name="deploy.path" value="prod" />
+    <property name="classes.dir" value="${deploy.path}/classes" />
+    <property name="integration.classes.dir" value="${deploy.path}/integration-classes"/>
+    <property name="release-name" value="${app.name}_${skypeCommand.version}"/>
+
+    <path id="app_classpath">
+        <fileset dir="lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <path id="integration_app_classpath">
+        <fileset dir="lib">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="${deploy.path}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="init" description="prepares necessary directories">
+        <echo message="Cleaning up the necessary directories..." />
+        <mkdir dir="${classes.dir}" />
+        <mkdir dir="${deploy.path}"/>
+    </target>
+
+    <target name="integration-init" description="prepares necessary directories">
+        <echo message="Cleaning up the necessary directories..." />
+        <mkdir dir="${deploy.path}"/>
+        <mkdir dir="${integration.classes.dir}" />
+    </target>
+
+    <target name="integration-compile" description="Compiles source java files">
+        <echo message="Compiling the source java files..." />
+
+        <javac srcdir="${integration.src.dir}" destdir="${integration.classes.dir}" debug="true" failonerror="true">
+            <classpath refid="integration_app_classpath" />
+        </javac>
+        <copy todir="${integration.classes.dir}" preservelastmodified="true">
+            <fileset dir="${integration.src.dir}">
+                <include name="**/*.*" />
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="init" description="Compiles source java files">
+        <echo message="Compiling the source java files..." />
+
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="true" failonerror="true">
+            <classpath refid="app_classpath" />
+        </javac>
+        <copy todir="${classes.dir}" preservelastmodified="true">
+            <fileset dir="${src.dir}">
+                <include name="**/*.*" />
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="create_jar" depends="compile" description="Creates jar file">
+        <jar compress="true" destfile="${deploy.path}/${release-name}.jar" basedir="${classes.dir}" >
+            <manifest>
+                <attribute name="Implementation-Title" value="${skypeCommand.manifest.implementation.Title}" />
+                <attribute name="Implementation-Version" value="${skypeCommand.manifest.implementation.Version}" />
+                <attribute name="Implementation-Vendor" value="${skypeCommand.manifest.implementation.Vendor}" />
+                <attribute name="Main-Class" value="com.kupal.skypeCommand.Runner" />
+            </manifest>
+
+        </jar>
+
+        <delete dir="${classes.dir}" />
+    </target>
+
+    <target name="create-integration-jar" description="Creates jar file">
+        <jar compress="true" destfile="${deploy.path}/${release-name}_integration.jar" basedir="${integration.classes.dir}" >
+            <manifest>
+                <attribute name="Implementation-Title" value="${skypeCommand.manifest.implementation.Title}" />
+                <attribute name="Implementation-Version" value="${skypeCommand.manifest.implementation.Version}" />
+                <attribute name="Implementation-Vendor" value="${skypeCommand.manifest.implementation.Vendor}" />
+                <attribute name="Class-path" value="${release-name}.jar"/>
+                <attribute name="Main-Class" value="com.kupal.skypeCommand.Integrator" />
+            </manifest>
+
+        </jar>
+
+        <delete dir="${integration.classes.dir}" />
+    </target>
+
+    <target name="lib-deploy">
+        <copy file="lib/JNIConnector.dll" todir="${deploy.path}/lib/win"/>
+        <copy file="lib/libJSA.so" todir="${deploy.path}/lib/linux"/>
+    </target>
+
+    <target name="clean" description="Deletes build, dist and classes directories">
+        <delete dir="${classes.dir}" />
+        <delete dir="${deploy.path}" />
+    </target>
+
+    <target name="zip">
+        <zip destfile="${deploy.path}/${release-name}.zip" basedir="${deploy.path}"/>
+        <delete file="${deploy.path}/${release-name}_integration.jar"/>
+        <delete file="${deploy.path}/${release-name}.jar"/>
+        <delete dir="${deploy.path}/lib"/>
+    </target>
+
+    <target name="product-build" depends="clean, create_jar, lib-deploy, zip"/>
+
+    <target name="product-jar-build" depends="clean, create_jar"/>
+
+    <target name="integration-build" depends="product-build, integration-init, create-integration-jar"/>
+
+</project>
