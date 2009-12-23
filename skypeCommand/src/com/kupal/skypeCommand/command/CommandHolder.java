@@ -9,6 +9,7 @@ import com.kupal.skypeCommand.command.impl.HelpCommand;
 import com.kupal.skypeCommand.command.impl.ErrorCommand;
 import com.kupal.skypeCommand.util.CommandAnnotationsUtil;
 import com.kupal.skypeCommand.util.ClassUtil;
+import com.kupal.skypeCommand.util.StringUtils;
 import com.kupal.skypeCommand.annotations.validator.Validator;
 import com.kupal.skypeCommand.annotations.validator.AnnotationValidationException;
 import com.kupal.skypeCommand.annotations.validator.ValidatorHolder;
@@ -61,11 +62,15 @@ public class CommandHolder {
         responseValidator.validate(commandResponseClass);
         prt("Validation SUCCESS: " + commandResponseClass.getName());
         prt("Command " + commandName + " registered successfully");
-        registeredCommands.put(commandName, command);
+        registeredCommands.put(commandName.toUpperCase(), command);
     }
 
     public static SkypeCommand getCommand(String commandName) {
-        Class<? extends SkypeCommand> registered = registeredCommands.get(commandName);
+        Class<? extends SkypeCommand> registered = ErrorCommand.class;
+
+        if(StringUtils.isNotEmpty(commandName))
+            registered = registeredCommands.get(commandName.toUpperCase());
+
         if(registered == null)
             registered = ErrorCommand.class;
         
