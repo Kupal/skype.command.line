@@ -3,7 +3,6 @@ package com.kupal.skypeCommand.annotations.process.impl;
 import com.kupal.skypeCommand.annotations.CmdParam;
 import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
-import com.kupal.skypeCommand.annotations.process.Processor;
 import com.kupal.skypeCommand.command.SkypeCommand;
 import com.kupal.skypeCommand.request.CommandRequest;
 import com.kupal.skypeCommand.util.ClassUtil;
@@ -14,7 +13,7 @@ import java.lang.reflect.Field;
 /**
  * @author Kupal 3kb
  */
-public class RequestProcessor implements Processor<CommandRequest> {
+public class RequestProcessor extends AbstractProcessor<CommandRequest> {
 
     /**
      * Fills all fields with annotation @CmdParam and check if required field is not set
@@ -41,7 +40,7 @@ public class RequestProcessor implements Processor<CommandRequest> {
             if(param.required() && StringUtils.isEmpty(paramValue))
                 throw new AnnotationProcessorException("parameter <" + paramName + "> is required");
 
-            setValueToField(field, commandRequest, paramValue);
+            super.setValueToField(field, commandRequest, paramValue, paramName);
         }
 
         return commandRequest;
@@ -66,13 +65,5 @@ public class RequestProcessor implements Processor<CommandRequest> {
         }
 
         return null;
-    }
-
-    private void setValueToField(Field field, CommandRequest request, String value) {
-        try {
-            field.set(request, value);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 }
