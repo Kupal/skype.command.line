@@ -1,10 +1,10 @@
 package com.kupal.skypeCommand.command;
 
 import com.kupal.skypeCommand.request.CommandRequest;
+import com.kupal.skypeCommand.request.RequestFactory;
 import com.kupal.skypeCommand.response.CommandResponse;
 import com.kupal.skypeCommand.response.ResponseFactory;
 import com.kupal.skypeCommand.util.StringUtils;
-import com.kupal.skypeCommand.util.ClassUtil;
 import com.kupal.skypeCommand.annotations.Request;
 import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.annotations.process.Processor;
@@ -16,14 +16,19 @@ import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
  */
 public class CommandRunner {
 
+    /**
+     * Executing command with specified params in <code>commandLine</code>
+     *
+     * @param commandLine - direct command line
+     * @return response
+     */
     public static CommandResponse execute(String commandLine) {
         SkypeCommand command    = getCommand(commandLine);
         Class<? extends CommandRequest> requestClass = AnnotationUtil.getAnnotation(Request.class, command.getClass(), true).requestClass();
         Processor processor     = ProcessorHolder.getProcessor(Request.class);
-        CommandRequest request  = ClassUtil.getInstance(requestClass);
         CommandResponse response;
         try {
-            request.addParam(CommandRequest.COMMAND_LINE_PARAM, commandLine);
+            CommandRequest request = RequestFactory.create(requestClass, commandLine);
             processor.process(request);
             response = command.execute(request);
         } catch (AnnotationProcessorException e) {

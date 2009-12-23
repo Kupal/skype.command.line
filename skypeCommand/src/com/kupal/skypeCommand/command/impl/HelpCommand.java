@@ -77,7 +77,7 @@ public class HelpCommand extends SkypeCommand {
 
             CmdParam annotation = field.getAnnotation(CmdParam.class);
 
-            info.append("\n\t\t\t\t");
+            info.append("\n");
 
             String paramName = annotation.name();
             boolean required = annotation.required();
@@ -94,7 +94,6 @@ public class HelpCommand extends SkypeCommand {
             info.append(")");
 
             eg.append(" ");
-            eg.append(SkypeCommand.PARAM_TOKEN);
             eg.append(paramName);
             eg.append(SkypeCommand.KEY_VALUE_SEPARATOR);
             eg.append("value");

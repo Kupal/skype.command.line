@@ -15,11 +15,18 @@ import java.lang.reflect.Field;
  * @author Kupal 3kb
  */
 public class RequestProcessor implements Processor<CommandRequest> {
-    
+
+    /**
+     * Fills all fields with annotation @CmdParam and check if required field is not set
+     *
+     * @param commandRequest - command request
+     * @return Command request with filled fields
+     * @throws AnnotationProcessorException if required fields is not set
+     */
     public CommandRequest process(CommandRequest commandRequest) throws AnnotationProcessorException {
         Class<? extends CommandRequest> requestClass = commandRequest.getClass();
         Field[] fields  = ClassUtil.getDeclaredFields(requestClass, true);
-        String line     = (String)commandRequest.getParam(CommandRequest.COMMAND_LINE_PARAM);
+        String line     = (String)commandRequest.getParam(CommandRequest.INTERNAL_COMMAND_LINE_PARAM);
 
         for (Field field : fields) {
             if(AnnotationUtil.isTransient(field))
