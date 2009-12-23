@@ -1,8 +1,7 @@
 package com.kupal.skypeCommand.skype;
 
 import com.kupal.skypeCommand.skype.impl.SkypeProfileFactory;
-import com.skype.Skype;
-import com.skype.SkypeException;
+import com.skype.*;
 
 /**
  * Skype server
@@ -34,6 +33,48 @@ public final class SkypeServer {
 
     public static void start() {
         start(SkypeProfileFactory.create());
+    }
+
+    public static void sendMessage(String userId, String text) {
+        User user = getUser(userId);
+        try {
+            user.send(text);
+        } catch (SkypeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static User getUser(String userId) {
+        User user = null;
+        try {
+            ContactList contactList = Skype.getContactList();
+            user = contactList.getFriend(userId);
+
+            if(user == null) {
+                Friend[] notAuthorized = contactList.getAllUserWaitingForAuthorization();
+                for (Friend friend : notAuthorized) {
+                    if(friend.getId().equals(userId))
+                        user = friend;
+                }
+            }
+        } catch (SkypeException e) {
+            e.printStackTrace();
+            return user;
+        }
+
+        return user;
+    }
+
+    public static Friend[] getAllUserWaitingForAuthorization() {
+        Friend[] notAuthorized = new Friend[0];
+
+        try {
+            notAuthorized = Skype.getContactList().getAllUserWaitingForAuthorization();
+        } catch (SkypeException e) {
+            e.printStackTrace();
+        }
+
+        return notAuthorized;
     }
 
     public static String getProfileId() {
