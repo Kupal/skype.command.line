@@ -1,6 +1,7 @@
 package com.kupal.skypeCommand.request;
 
 import com.kupal.skypeCommand.response.CommandResponse;
+import com.skype.User;
 
 import java.util.Map;
 
@@ -49,4 +50,17 @@ public interface CommandRequest {
      * @return response
      */
     CommandResponse getResponse();
+
+    /**
+     * set sender of request
+     *
+     * @param sender of request
+     */
+    void setSender(User sender);
+
+    /**
+     * retrieve command sender
+     * @return command sender
+     */
+    User getSender();
 }

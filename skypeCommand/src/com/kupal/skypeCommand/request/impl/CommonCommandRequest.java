@@ -5,6 +5,7 @@ import com.kupal.skypeCommand.response.CommandResponse;
 import com.kupal.skypeCommand.response.ResponseFactory;
 import com.kupal.skypeCommand.annotations.Transient;
 import com.kupal.skypeCommand.annotations.Request;
+import com.skype.User;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -17,6 +18,9 @@ public class CommonCommandRequest implements CommandRequest {
 
     @Transient
     private Map<String, Object> params = new HashMap<String, Object>();
+    
+    @Transient
+    private User sender;
 
     public CommonCommandRequest() {
 
@@ -53,5 +57,13 @@ public class CommonCommandRequest implements CommandRequest {
 
     public CommandResponse getResponse() {
         return ResponseFactory.create();
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 }

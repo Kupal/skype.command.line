@@ -10,6 +10,7 @@ import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.annotations.process.Processor;
 import com.kupal.skypeCommand.annotations.process.ProcessorHolder;
 import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
+import com.skype.User;
 
 /**
  * @author Kupal 3kb
@@ -19,16 +20,18 @@ public class CommandRunner {
     /**
      * Executing command with specified params in <code>commandLine</code>
      *
+     * @param sender - sender of command
      * @param commandLine - direct command line
      * @return response
      */
-    public static CommandResponse execute(String commandLine) {
+    public static CommandResponse execute(User sender, String commandLine) {
         SkypeCommand command    = getCommand(commandLine);
         Class<? extends CommandRequest> requestClass = AnnotationUtil.getAnnotation(Request.class, command.getClass(), true).requestClass();
         Processor processor     = ProcessorHolder.getProcessor(Request.class);
         CommandResponse response;
         try {
             CommandRequest request = RequestFactory.create(requestClass, commandLine);
+            request.setSender(sender);
             processor.process(request);
             response = command.execute(request);
         } catch (AnnotationProcessorException e) {
