@@ -21,7 +21,7 @@ public abstract class AbstractProcessor<T> implements Processor<T> {
                 field.setByte(object, Byte.parseByte(value));
             } else if(type.equals(Character.class) || type.getName().equals("char")) {
                 if(value.length() > 1) {
-                    throw new AnnotationProcessorException("value of <" + paramName + "> is incorrect. Expected type: " + type.getSimpleName());
+                    throw new NumberFormatException();
                 }
                 field.setChar(object, value.charAt(0));
             } else if(type.equals(Double.class) || type.getName().equals("double")) {
@@ -40,6 +40,8 @@ public abstract class AbstractProcessor<T> implements Processor<T> {
 
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (NumberFormatException e) {
+            throw new AnnotationProcessorException("value of <" + paramName + "> is incorrect. Expected type: " + type.getSimpleName());
         }
     }
 }

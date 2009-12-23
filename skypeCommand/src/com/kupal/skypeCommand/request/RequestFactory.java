@@ -48,16 +48,19 @@ public final class RequestFactory {
      */
     public static <T extends CommandRequest> T create(Class<T> clazz, String commandLine) {
         T t = ClassUtil.getInstance(clazz);
-        t.addParam(T.COMMAND_LINE_PARAM, commandLine);
 
+        String caseInsensitiveCmdLine = commandLine.toUpperCase();
+
+        t.addParam(T.COMMAND_LINE_PARAM, caseInsensitiveCmdLine);
+        
         Field[] annotatedDeclaredFields = ClassUtil.getAnnotatedDeclaredFields(clazz, CmdParam.class, true);
-        String internalCommandLine = commandLine;
+        String internalCommandLine = caseInsensitiveCmdLine;
 
         for (Field field : annotatedDeclaredFields) {
             CmdParam param = field.getAnnotation(CmdParam.class);
             String paramName = StringUtils.isEmpty(param.name()) ? field.getName() : param.name();
-            paramName += SkypeCommand.KEY_VALUE_SEPARATOR;
-            internalCommandLine = commandLine.replace(paramName, SkypeCommand.PARAM_TOKEN + paramName);
+            paramName = paramName.toUpperCase() + SkypeCommand.KEY_VALUE_SEPARATOR;
+            internalCommandLine = internalCommandLine.replace(" " + paramName, SkypeCommand.PARAM_TOKEN + paramName);
         }
 
         t.addParam(T.INTERNAL_COMMAND_LINE_PARAM, internalCommandLine);
