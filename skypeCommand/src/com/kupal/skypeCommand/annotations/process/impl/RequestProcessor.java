@@ -33,7 +33,6 @@ public class RequestProcessor extends AbstractProcessor<CommandRequest> {
 
             CmdParam param = field.getAnnotation(CmdParam.class);
 
-            field.setAccessible(true);
             String paramName = StringUtils.isEmpty(param.name()) ? field.getName() : param.name();
             String paramValue = exposeParamValue(line, paramName);
 

@@ -13,25 +13,27 @@ public abstract class AbstractProcessor<T> implements Processor<T> {
     protected void setValueToField(Field field, T object, String value, String paramName) throws AnnotationProcessorException {
         Class<?> type = field.getType();
         try {
+            field.setAccessible(true);
+
             if(type.equals(Integer.class) || type.getName().equals("int")) {
-                field.setInt(object, Integer.parseInt(value));
+                field.set(object, Integer.parseInt(value));
             } else if(type.equals(Boolean.class) || type.getName().equals("boolean")) {
-                field.setBoolean(object, Boolean.parseBoolean(value));
+                field.set(object, Boolean.parseBoolean(value));
             } else if(type.equals(Byte.class) || type.getName().equals("byte")) {
-                field.setByte(object, Byte.parseByte(value));
+                field.set(object, Byte.parseByte(value));
             } else if(type.equals(Character.class) || type.getName().equals("char")) {
                 if(value.length() > 1) {
                     throw new NumberFormatException();
                 }
-                field.setChar(object, value.charAt(0));
+                field.set(object, value.charAt(0));
             } else if(type.equals(Double.class) || type.getName().equals("double")) {
-                field.setDouble(object, Double.parseDouble(value));
+                field.set(object, Double.parseDouble(value));
             } else if(type.equals(Float.class) || type.getName().equals("float")) {
-                field.setFloat(object, Float.parseFloat(value));
+                field.set(object, Float.parseFloat(value));
             } else if(type.equals(Long.class) || type.getName().equals("long")) {
-                field.setLong(object, Long.parseLong(value));
+                field.set(object, Long.parseLong(value));
             } else if(type.equals(Short.class) || type.getName().equals("short")) {
-                field.setShort(object, Short.parseShort(value));
+                field.set(object, Short.parseShort(value));
             } else if(type.equals(String.class)) {
                 field.set(object, value);
             } else {

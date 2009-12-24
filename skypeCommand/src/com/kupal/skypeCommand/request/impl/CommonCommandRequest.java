@@ -66,4 +66,8 @@ public class CommonCommandRequest implements CommandRequest {
     public void setSender(User sender) {
         this.sender = sender;
     }
+
+    public String getUserId() {
+        return sender.getId();
+    }
 }
