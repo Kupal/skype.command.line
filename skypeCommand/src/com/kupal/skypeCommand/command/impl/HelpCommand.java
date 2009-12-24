@@ -6,10 +6,7 @@ import com.kupal.skypeCommand.command.CommandException;
 import com.kupal.skypeCommand.response.CommandResponse;
 import com.kupal.skypeCommand.request.CommandRequest;
 import com.kupal.skypeCommand.request.impl.HelpRequest;
-import com.kupal.skypeCommand.annotations.Request;
-import com.kupal.skypeCommand.annotations.Command;
-import com.kupal.skypeCommand.annotations.AnnotationUtil;
-import com.kupal.skypeCommand.annotations.CmdParam;
+import com.kupal.skypeCommand.annotations.*;
 import com.kupal.skypeCommand.util.StringUtils;
 import com.kupal.skypeCommand.util.ClassUtil;
 
@@ -20,6 +17,7 @@ import java.lang.reflect.Field;
  * @author Kupal 3kb
  */
 @Command(name = "HELP_CMD")
+@Description("Retrieve list of registered command(s) with info")
 @Request(requestClass = HelpRequest.class)
 public class HelpCommand extends SkypeCommand {
 
@@ -64,6 +62,11 @@ public class HelpCommand extends SkypeCommand {
         info.append("\nName: ");
         info.append(commandName);
 
+        if(AnnotationUtil.hasDescription(commandClass)) {
+            info.append("\n");
+            info.append(AnnotationUtil.getAnnotation(Description.class, commandClass, true).value());
+        }
+
         Class<? extends CommandRequest> commandRequestClass = AnnotationUtil.getAnnotation(Request.class, commandClass, true).requestClass();
         Field[] declaredFields = ClassUtil.getDeclaredFields(commandRequestClass, true);
 
@@ -92,6 +95,11 @@ public class HelpCommand extends SkypeCommand {
             info.append(required ? "" : "not ").append("required ");
             info.append(type.getSimpleName());
             info.append(")");
+
+            if(AnnotationUtil.hasDescription(field)) {
+                info.append(" - ");
+                info.append(field.getAnnotation(Description.class).value());
+            }
 
             eg.append(" ");
             eg.append(paramName);
