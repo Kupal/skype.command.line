@@ -10,12 +10,12 @@ import com.kupal.skypeCommand.response.CommandResponse;
  */
 @Request
 @Response
-public abstract class SkypeCommand {
+public abstract class SkypeCommand<T extends CommandRequest> {
 
     public static final String CMD_FIRST_TOKEN = "/";
     public static final String PARAM_TOKEN = "-D";
     public static final String KEY_VALUE_SEPARATOR = "=";
     protected String name;
 
-    public abstract CommandResponse execute(CommandRequest request) throws CommandException;
+    public abstract CommandResponse execute(T request) throws CommandException;
 }

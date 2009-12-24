@@ -68,15 +68,13 @@ public class HelpCommand extends SkypeCommand {
         }
 
         Class<? extends CommandRequest> commandRequestClass = AnnotationUtil.getAnnotation(Request.class, commandClass, true).requestClass();
-        Field[] declaredFields = ClassUtil.getDeclaredFields(commandRequestClass, true);
+        Field[] declaredFields = ClassUtil.getAnnotatedDeclaredFields(commandRequestClass, CmdParam.class, true);
 
         if(declaredFields.length > 0) {
             info.append("\nParameters:");
         }
 
         for (Field field : declaredFields) {
-            if(AnnotationUtil.isTransient(field))
-                continue;
 
             CmdParam annotation = field.getAnnotation(CmdParam.class);
 
