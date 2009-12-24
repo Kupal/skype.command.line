@@ -84,4 +84,12 @@ public final class SkypeServer {
     public static boolean isSkypeServerStarted() {
         return skypeServerStarted;
     }
+
+    public static boolean isAuthorized(User user) {
+        try {
+            return user.isAuthorized();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -13,4 +13,11 @@ import java.lang.annotation.Target;
 public @interface Command {
 
     String name();
+
+    /**
+     * If set to true, only authorized user can call this command
+     *  
+     * @return boolean
+     */
+    boolean authorizedOnly() default false;
 }

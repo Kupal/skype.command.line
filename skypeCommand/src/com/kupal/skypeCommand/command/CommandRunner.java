@@ -7,9 +7,11 @@ import com.kupal.skypeCommand.response.ResponseFactory;
 import com.kupal.skypeCommand.util.StringUtils;
 import com.kupal.skypeCommand.annotations.Request;
 import com.kupal.skypeCommand.annotations.AnnotationUtil;
+import com.kupal.skypeCommand.annotations.Command;
 import com.kupal.skypeCommand.annotations.process.Processor;
 import com.kupal.skypeCommand.annotations.process.ProcessorHolder;
 import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
+import com.kupal.skypeCommand.skype.SkypeServer;
 import com.skype.User;
 
 /**
@@ -30,6 +32,8 @@ public class CommandRunner {
         Processor processor     = ProcessorHolder.getProcessor(Request.class);
         CommandResponse response;
         try {
+            validate(sender, command);
+
             CommandRequest request = RequestFactory.create(requestClass, commandLine);
             request.setSender(sender);
             processor.process(request);
@@ -49,5 +53,13 @@ public class CommandRunner {
 
         String commandName = commandLine.split(" ")[0].replace(SkypeCommand.CMD_FIRST_TOKEN, "");
         return CommandHolder.getCommand(commandName);
+    }
+
+    private static void validate(User sender, SkypeCommand command) {
+        Command commandAnnotation = AnnotationUtil.getAnnotation(Command.class, command.getClass(), true);
+            boolean authorizedOnly = commandAnnotation.authorizedOnly();
+
+            if(authorizedOnly && !SkypeServer.isAuthorized(sender))
+                throw new SecurityException("Command " + commandAnnotation.name() + " can be called only by authorized user");
     }
 }
