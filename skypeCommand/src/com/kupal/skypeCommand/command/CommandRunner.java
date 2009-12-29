@@ -42,6 +42,8 @@ public class CommandRunner {
             response = ResponseFactory.create(e);
         } catch (CommandException e) {
             response = ResponseFactory.create(e);
+        } catch (Exception e) {
+            response = ResponseFactory.create(e);
         }
         
         return response;
