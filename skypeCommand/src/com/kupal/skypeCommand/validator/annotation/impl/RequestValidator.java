@@ -1,11 +1,12 @@
-package com.kupal.skypeCommand.annotations.validator.impl;
+package com.kupal.skypeCommand.validator.annotation.impl;
 
 import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.annotations.CmdParam;
 import com.kupal.skypeCommand.annotations.Request;
-import com.kupal.skypeCommand.annotations.validator.AnnotationValidationException;
-import com.kupal.skypeCommand.annotations.validator.Validator;
-import com.kupal.skypeCommand.annotations.validator.ValidatorHolder;
+import com.kupal.skypeCommand.validator.AnnotationValidationException;
+import com.kupal.skypeCommand.validator.Validator;
+import com.kupal.skypeCommand.validator.ValidatorHolder;
+import com.kupal.skypeCommand.validator.annotation.AnnotationValidator;
 import com.kupal.skypeCommand.request.CommandRequest;
 
 import java.lang.reflect.Field;
@@ -13,7 +14,7 @@ import java.lang.reflect.Field;
 /**
  * @author Kupal 3kb
  */
-public class RequestValidator implements Validator<Class<CommandRequest>> {
+public class RequestValidator implements AnnotationValidator<Class<CommandRequest>> {
 
     public boolean validate(Class<CommandRequest> commandRequestClass) throws AnnotationValidationException {
         boolean isRequest = AnnotationUtil.getAnnotation(Request.class, commandRequestClass, true) != null;

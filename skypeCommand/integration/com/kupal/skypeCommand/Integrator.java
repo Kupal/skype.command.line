@@ -2,7 +2,7 @@ package com.kupal.skypeCommand;
 
 import com.kupal.skypeCommand.skype.SkypeServer;
 import com.kupal.skypeCommand.command.CommandHolder;
-import com.kupal.skypeCommand.annotations.validator.AnnotationValidationException;
+import com.kupal.skypeCommand.validator.AnnotationValidationException;
 import com.kupal.skypeCommand.command.TestCommand;
 
 /**

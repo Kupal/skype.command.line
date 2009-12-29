@@ -1,16 +1,16 @@
-package com.kupal.skypeCommand.annotations.validator.impl;
+package com.kupal.skypeCommand.validator.annotation.impl;
 
 import com.kupal.skypeCommand.annotations.CmdParam;
 import com.kupal.skypeCommand.annotations.Transient;
-import com.kupal.skypeCommand.annotations.validator.AnnotationValidationException;
-import com.kupal.skypeCommand.annotations.validator.Validator;
+import com.kupal.skypeCommand.validator.AnnotationValidationException;
+import com.kupal.skypeCommand.validator.annotation.AnnotationValidator;
 
 import java.lang.reflect.Field;
 
 /**
  * @author Kupal 3kb
  */
-public class ParameterValidator implements Validator<Field> {
+public class ParameterValidator implements AnnotationValidator<Field> {
     
     public boolean validate(Field field) throws AnnotationValidationException {
 

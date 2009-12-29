@@ -1,4 +1,4 @@
-package com.kupal.skypeCommand.annotations.validator;
+package com.kupal.skypeCommand.validator;
 
 /**
  * @author Kupal 3kb

@@ -1,13 +1,13 @@
-package com.kupal.skypeCommand.annotations.validator;
+package com.kupal.skypeCommand.validator;
 
 import com.kupal.skypeCommand.annotations.CmdParam;
 import com.kupal.skypeCommand.annotations.Command;
 import com.kupal.skypeCommand.annotations.Request;
 import com.kupal.skypeCommand.annotations.Response;
-import com.kupal.skypeCommand.annotations.validator.impl.CommandValidator;
-import com.kupal.skypeCommand.annotations.validator.impl.ParameterValidator;
-import com.kupal.skypeCommand.annotations.validator.impl.RequestValidator;
-import com.kupal.skypeCommand.annotations.validator.impl.ResponseValidator;
+import com.kupal.skypeCommand.validator.annotation.impl.CommandValidator;
+import com.kupal.skypeCommand.validator.annotation.impl.ParameterValidator;
+import com.kupal.skypeCommand.validator.annotation.impl.RequestValidator;
+import com.kupal.skypeCommand.validator.annotation.impl.ResponseValidator;
 import com.kupal.skypeCommand.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
