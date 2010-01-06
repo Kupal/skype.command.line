@@ -7,14 +7,14 @@ import com.kupal.skypeCommand.skype.SkypeProfile;
  * @author Kupal 3kb
  */
 public class SkypeProfileFactory {
-    private static final String DEFAUL_APPLICATION_NAME = "SkypeServer";
+    private static final String DEFAULT_APPLICATION_NAME = "SkypeServer";
 
     public static SkypeProfile create() {
-        return create(new CommonMessageListener(), DEFAUL_APPLICATION_NAME);
+        return create(new CommonMessageListener(), DEFAULT_APPLICATION_NAME);
     }
 
     public static SkypeProfile create(CommandMessageListener commandMessageListener) {
-        return create(commandMessageListener, DEFAUL_APPLICATION_NAME);
+        return create(commandMessageListener, DEFAULT_APPLICATION_NAME);
     }
 
     public static SkypeProfile create(String appName) {

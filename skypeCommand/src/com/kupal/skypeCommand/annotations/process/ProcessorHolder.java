@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class ProcessorHolder {
 
-    private static Map<Class<? extends Annotation>, Class<? extends Processor>> registeredProcessors = new HashMap<Class<? extends Annotation>, Class<? extends Processor>>();
+    private static final Map<Class<? extends Annotation>, Class<? extends Processor>> registeredProcessors = new HashMap<Class<? extends Annotation>, Class<? extends Processor>>();
 
     static {
         registerProcessor(Request.class, RequestProcessor.class);

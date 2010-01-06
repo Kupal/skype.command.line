@@ -16,7 +16,7 @@ public interface CommandRequest {
     /** name of parameter that introduce direct command string */
     String COMMAND_LINE_PARAM = "CommandLine";
 
-    /** name of parameter that introduce internal vatiant of direct command string */
+    /** name of parameter that introduce internal variant of direct command string */
     String INTERNAL_COMMAND_LINE_PARAM = "InternalCommandLine";
 
     Map<String, Object> getParams();
@@ -31,7 +31,7 @@ public interface CommandRequest {
     Object getParam(String key);
 
     /**
-     * Add new paramenter or replace existed with same name
+     * Add new parameter or replace existed with same name
      * 
      * @param key - parameter name
      * @param value - parameter value
@@ -45,7 +45,7 @@ public interface CommandRequest {
     void setCommandName(String commandName);
 
     /**
-     * Getting appropriate respnse
+     * Getting appropriate response
      *
      * @return response
      */

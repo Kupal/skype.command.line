@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class ValidatorHolder {
 
-    private static Map<Class<? extends Annotation>, Class<? extends Validator>> registeredValidators = new HashMap<Class<? extends Annotation>, Class<? extends Validator>>();
+    private static final Map<Class<? extends Annotation>, Class<? extends Validator>> registeredValidators = new HashMap<Class<? extends Annotation>, Class<? extends Validator>>();
 
     static {
         registerValidator(CmdParam.class, ParameterValidator.class);

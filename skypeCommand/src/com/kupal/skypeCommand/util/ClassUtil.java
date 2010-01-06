@@ -56,7 +56,7 @@ public class ClassUtil {
     }
 
     /**
-     * Retrieving fields list of specified class and wich
+     * Retrieving fields list of specified class and which
      * are annotated by incoming annotation class
      * If recursively is true, retrieving fields from all class hierarchy
      *

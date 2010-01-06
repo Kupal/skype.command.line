@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class CommandHolder {
 
-    private static Map<String, Class<? extends SkypeCommand>> registeredCommands = new HashMap<String, Class<? extends SkypeCommand>>();
+    private static final Map<String, Class<? extends SkypeCommand>> registeredCommands = new HashMap<String, Class<? extends SkypeCommand>>();
 
     static {
         try {
