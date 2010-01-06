@@ -1,7 +1,10 @@
 package com.kupal.skypeCommand.annotations.process.impl;
 
+import com.kupal.skypeCommand.annotations.Converter;
+import com.kupal.skypeCommand.annotations.process.ParameterConverter;
 import com.kupal.skypeCommand.annotations.process.Processor;
 import com.kupal.skypeCommand.exception.AnnotationProcessorException;
+import com.kupal.skypeCommand.util.ClassUtil;
 
 import java.lang.reflect.Field;
 
@@ -15,7 +18,11 @@ public abstract class AbstractProcessor<T> implements Processor<T> {
         try {
             field.setAccessible(true);
 
-            if(type.equals(Integer.class) || type.getName().equals("int")) {
+            Converter converterAnnotation = field.getAnnotation(Converter.class);
+            if(converterAnnotation != null) {
+                ParameterConverter converter = ClassUtil.getInstance(converterAnnotation.value());
+                field.set(object, converter.convert(value));
+            } else if(type.equals(Integer.class) || type.getName().equals("int")) {
                 field.set(object, Integer.parseInt(value));
             } else if(type.equals(Boolean.class) || type.getName().equals("boolean")) {
                 field.set(object, Boolean.parseBoolean(value));
