@@ -1,7 +1,7 @@
 package com.kupal.skypeCommand.annotations.process.impl;
 
 import com.kupal.skypeCommand.annotations.process.Processor;
-import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
+import com.kupal.skypeCommand.exception.AnnotationProcessorException;
 
 import java.lang.reflect.Field;
 

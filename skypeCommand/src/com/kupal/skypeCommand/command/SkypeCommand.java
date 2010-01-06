@@ -2,6 +2,7 @@ package com.kupal.skypeCommand.command;
 
 import com.kupal.skypeCommand.annotations.Request;
 import com.kupal.skypeCommand.annotations.Response;
+import com.kupal.skypeCommand.exception.CommandException;
 import com.kupal.skypeCommand.request.CommandRequest;
 import com.kupal.skypeCommand.response.CommandResponse;
 

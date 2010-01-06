@@ -1,4 +1,4 @@
-package com.kupal.skypeCommand.command;
+package com.kupal.skypeCommand.exception;
 
 /**
  * @author Kupal 3kb

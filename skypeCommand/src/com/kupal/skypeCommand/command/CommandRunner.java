@@ -1,5 +1,7 @@
 package com.kupal.skypeCommand.command;
 
+import com.kupal.skypeCommand.exception.CommandException;
+import com.kupal.skypeCommand.exception.ValidationException;
 import com.kupal.skypeCommand.request.CommandRequest;
 import com.kupal.skypeCommand.request.RequestFactory;
 import com.kupal.skypeCommand.response.CommandResponse;
@@ -10,7 +12,7 @@ import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.annotations.Command;
 import com.kupal.skypeCommand.annotations.process.Processor;
 import com.kupal.skypeCommand.annotations.process.ProcessorHolder;
-import com.kupal.skypeCommand.annotations.process.AnnotationProcessorException;
+import com.kupal.skypeCommand.exception.AnnotationProcessorException;
 import com.kupal.skypeCommand.skype.SkypeServer;
 import com.skype.User;
 
@@ -39,6 +41,8 @@ public class CommandRunner {
             processor.process(request);
             response = command.execute(request);
         } catch (AnnotationProcessorException e) {
+            response = ResponseFactory.create(e);
+        } catch (ValidationException e) {
             response = ResponseFactory.create(e);
         } catch (CommandException e) {
             response = ResponseFactory.create(e);

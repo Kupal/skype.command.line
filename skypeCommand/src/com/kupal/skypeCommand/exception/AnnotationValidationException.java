@@ -1,9 +1,9 @@
-package com.kupal.skypeCommand.validator;
+package com.kupal.skypeCommand.exception;
 
 /**
  * @author Kupal 3kb
  */
-public class AnnotationValidationException extends Exception {
+public class AnnotationValidationException extends ValidationException {
 
     public AnnotationValidationException() {
         super();

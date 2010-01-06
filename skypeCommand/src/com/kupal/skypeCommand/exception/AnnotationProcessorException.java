@@ -1,9 +1,9 @@
-package com.kupal.skypeCommand.annotations.process;
+package com.kupal.skypeCommand.exception;
 
 /**
  * @author Kupal 3kb
  */
-public class AnnotationProcessorException extends Exception {
+public class AnnotationProcessorException extends CommandException {
 
     public AnnotationProcessorException() {
         super();

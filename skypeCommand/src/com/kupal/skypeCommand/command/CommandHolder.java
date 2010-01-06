@@ -10,15 +10,15 @@ import com.kupal.skypeCommand.command.impl.ErrorCommand;
 import com.kupal.skypeCommand.util.CommandAnnotationsUtil;
 import com.kupal.skypeCommand.util.ClassUtil;
 import com.kupal.skypeCommand.util.StringUtils;
-import com.kupal.skypeCommand.validator.Validator;
-import com.kupal.skypeCommand.validator.AnnotationValidationException;
-import com.kupal.skypeCommand.validator.ValidatorHolder;
+import com.kupal.skypeCommand.exception.AnnotationValidationException;
 import com.kupal.skypeCommand.annotations.Command;
 import com.kupal.skypeCommand.annotations.Request;
 import com.kupal.skypeCommand.annotations.Response;
 import com.kupal.skypeCommand.annotations.AnnotationUtil;
 import com.kupal.skypeCommand.request.CommandRequest;
 import com.kupal.skypeCommand.response.CommandResponse;
+import com.kupal.skypeCommand.validator.ValidatorHolder;
+import com.kupal.skypeCommand.validator.annotation.AnnotationValidator;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -51,9 +51,9 @@ public class CommandHolder {
         Class<? extends CommandRequest> commandRequestClass = AnnotationUtil.getAnnotation(Request.class, command, true).requestClass();
         Class<? extends CommandResponse> commandResponseClass = AnnotationUtil.getAnnotation(Response.class, command, true).responseClass();
 
-        Validator commandValidator = ValidatorHolder.getValidator(Command.class);
-        Validator requestValidator = ValidatorHolder.getValidator(Request.class);
-        Validator responseValidator = ValidatorHolder.getValidator(Response.class);
+        AnnotationValidator commandValidator = (AnnotationValidator)ValidatorHolder.getValidator(Command.class);
+        AnnotationValidator requestValidator = (AnnotationValidator)ValidatorHolder.getValidator(Request.class);
+        AnnotationValidator responseValidator = (AnnotationValidator)ValidatorHolder.getValidator(Response.class);
 
         commandValidator.validate(command);
         prt("Validation SUCCESS: " + command.getName());

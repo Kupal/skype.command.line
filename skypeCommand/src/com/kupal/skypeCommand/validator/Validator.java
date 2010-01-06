@@ -1,9 +1,11 @@
 package com.kupal.skypeCommand.validator;
 
+import com.kupal.skypeCommand.exception.ValidationException;
+
 /**
  * @author Kupal 3kb
  */
 public interface Validator<T> {
 
-    boolean validate(T t) throws AnnotationValidationException;
+    void validate(T t) throws ValidationException;
 }
