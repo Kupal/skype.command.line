@@ -9,6 +9,14 @@
     <version>1.2</version>
     <name>Skype command line API</name>
 
+    <developers>
+        <developer>
+            <name>Sergey Kravchenya</name>
+            <organization>3kb</organization>
+            <email>kravchenya@gmail.com</email>
+        </developer>
+    </developers>
+
     <repositories>
         <repository>
             <id>maven2-repository.dev.java.net</id>
