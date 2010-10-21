@@ -8,11 +8,11 @@ import java.lang.reflect.Field;
  */
 public class AnnotationUtil {
 
-    public static <T extends Annotation> T getAnnotation(Class<T> annotationClass, Class clazz, boolean recursively) {
+    public static <T extends Annotation> T getAnnotation(Class<T> annotationClass, Class<?> clazz, boolean recursively) {
         if(annotationClass == null || clazz == null)
             return null;
 
-        T t = (T)clazz.getAnnotation(annotationClass);
+        T t = clazz.getAnnotation(annotationClass);
 
         if(t == null && recursively)
             t = getAnnotation(annotationClass, clazz.getSuperclass(), recursively);
